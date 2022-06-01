@@ -26,12 +26,39 @@ class redditScrape:
         self.TOKEN = res.json()['access_token']
         self.headers['authorization'] = f'bearer {self.TOKEN}'
 
+        # Initializing pandas dataframe for recording posts
+        self.posts = {}
+
         # Accessing Reddit API
         # <Response [403]> -> indicates error
         # <Response [200]> -> indicates that everything is fine
         print(requests.get("https://oauth.reddit.com/api/v1/me", headers=self.headers))
+        return
+
+
+    # Parameters
+    #   1. sub (str) -> subreddit to find popular posts on
+    def getPopular(self, sub: str) -> any:
+        res = requests.get('https://oauth.reddit.com/r/' + sub + '/hot', headers=self.headers)
+        self.posts[sub] = {}
+        print(res.json())
+        for post in res.json()['data']['children']:
+            self.posts[sub][post['data']['subreddit']] = {
+                'subreddit': post['data']['subreddit'],
+                'title': post['data']['title'],
+                'selftext': post['data']['selftext'],
+                'upvote_ratio': post['data']['upvote_ratio'],
+                'ups': post['data']['ups'],
+                'downs': post['data']['downs'],
+                'score': post['data']['score']
+            }
+
+        print(self.posts)
+        return
 
 def main():
     reddit = redditScrape()
+    reddit.getPopular('boysvsgirlsmemes')
+
 
 main()
