@@ -55,7 +55,7 @@ class redditImageScraper:
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Multithreaded Reddit Image Downloader v2.0 (by u/impshum)')
+    parser = argparse.ArgumentParser(description='')
     required_args = parser.add_argument_group('required arguments')
     required_args.add_argument('-s', type=str, help="subreddit", required=True)
     required_args.add_argument('-i', type=int, help="number of images", required=True)
