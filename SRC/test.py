@@ -37,7 +37,7 @@ class redditImageScraper:
                 submissions = self.reddit.subreddit(self.sub).new(limit=None)
 
             for submission in submissions:
-                if not submission.stickied and submission.over_18 == self.nsfw \
+                if not submission.stickied  \
                     and submission.url.endswith(('jpg', 'jpeg', 'png')):
                     fname = self.path + re.search('(?s:.*)\w/(.*)', submission.url).group(1)
                     if not os.path.isfile(fname):
